@@ -54,6 +54,8 @@ def save_board(board, all_boards):
     all_boards.append(new_board)  # saving current solution for printing
 
 
+# -------------prints all possible solutions---------------#
+'''
 # Backtracking algorithm to solve n-queens
 def solve(board, all_boards, col):
     if col == len(board):
@@ -75,7 +77,38 @@ def solution(n):
         for row in aboard:
             print(row)
         print()
+'''
+
+# ------------prints one solution with the backtracking involved----------#
+# Backtracking algorithm to solve n-queens
+def solve(board, col):
+    if col == len(board):
+        return True
+
+    for row in range(len(board)):
+        if is_safe(row, col, board):
+            board[row][col] = 'Q'
+            print_board(board)  # Print the board configuration at each step
+            if solve(board, col + 1):
+                return True
+            board[row][col] = '*'
+    return False
+
+
+def print_board(board):
+    for row in board:
+        print(' '.join(row))
+    print()
+
+
+def solution(n):
+    board = [['*' for _ in range(n)] for _ in range(n)]
+    if solve(board, 0):
+        print("Solution found:")
+        print_board(board)
+    else:
+        print("No solution found")
 
 
 if __name__ == "__main__":
-    solution(4)
+    solution(3)
